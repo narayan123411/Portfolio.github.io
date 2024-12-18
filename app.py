@@ -4,17 +4,15 @@ import os
 
 app = Flask(__name__)
 
-# Get Rasa server URL from an environment variable or default to localhost
+# Dynamically get Rasa server URL from environment variable
 RASA_SERVER = os.getenv("RASA_SERVER_URL", "http://localhost:5005/webhooks/rest/webhook")
 
 @app.route("/")
 def home():
-    """Render chatbot interface."""
     return render_template("index.html")
 
 @app.route("/send", methods=["POST"])
 def send_message():
-    """Send user message to Rasa and return the bot's response."""
     user_message = request.json.get("message")
     try:
         response = requests.post(
@@ -25,6 +23,7 @@ def send_message():
         response.raise_for_status()
         return jsonify(response.json())
     except requests.RequestException as e:
+        app.logger.error(f"Error occurred while communicating with Rasa: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
