@@ -14,11 +14,11 @@ RUN pip install rasa flask requests
 RUN rasa init --no-prompt
 
 # Copy Flask app and templates
-COPY app.py .
+COPY app.py . 
 COPY templates/index.html templates/index.html
 
 # Expose Flask and Rasa ports
 EXPOSE 5005 8080
 
 # Start Rasa server and Flask app
-CMD rasa run --enable-api & python app.py
+CMD rasa run --enable-api --cors "*" --port 5005 & python app.py
