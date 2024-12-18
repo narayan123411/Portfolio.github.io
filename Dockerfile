@@ -12,7 +12,7 @@ RUN pip install rasa flask requests
 
 # Initialize a new Rasa project (remove this if you have an existing project)
 RUN rasa init --no-prompt
-
+RUN rasa train
 # Copy Flask app and templates to the container
 COPY app.py .
 COPY templates/index.html ./templates/index.html
