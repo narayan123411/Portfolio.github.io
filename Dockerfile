@@ -22,13 +22,10 @@ RUN rasa train
 COPY app.py .
 COPY templates ./templates/
 
-# Create logs directory for Supervisor
-RUN mkdir -p /app/logs
-
 # Copy Supervisor configuration
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Expose the necessary port (Render typically uses port 8080)
+# Expose the single port (Render uses this for port binding)
 EXPOSE 8080
 
 # Start Supervisor to manage Rasa and Flask processes
