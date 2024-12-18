@@ -19,7 +19,7 @@ COPY app.py .
 COPY templates/index.html ./templates/index.html
 
 # Expose Flask and Rasa ports
-EXPOSE 5005 8080
+EXPOSE 5000 5005
 
 # Start Rasa server and Flask app
 CMD rasa run --enable-api --cors "*" & python app.py
