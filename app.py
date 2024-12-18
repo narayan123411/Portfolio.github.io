@@ -27,4 +27,4 @@ def send_message():
         return jsonify({"error": "Failed to connect to Rasa server"}), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)  # Flask app will run on port 8080
+    app.run(host="0.0.0.0", port=8080)  # Flask app will run on port 8080
