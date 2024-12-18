@@ -2,7 +2,10 @@
 FROM python:3.9
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y \
+    git \
+    supervisor && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
@@ -19,10 +22,14 @@ RUN rasa train
 COPY app.py .
 COPY templates ./templates/
 
-# Expose the required port
+# Create logs directory for Supervisor
+RUN mkdir -p /app/logs
+
+# Copy Supervisor configuration
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Expose the necessary port (Render typically uses port 8080)
 EXPOSE 8080
 
-# Start Rasa server and Flask app using supervisord
-RUN apt-get update && apt-get install -y supervisor
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-CMD ["/usr/bin/supervisord"]
+# Start Supervisor to manage Rasa and Flask processes
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
