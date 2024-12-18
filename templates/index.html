@@ -18,13 +18,21 @@
             fetch("/send", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message } ),
+                body: JSON.stringify({ message }),
             })
             .then(response => response.json())
             .then(data => {
                 const chatbox = document.getElementById("messages");
                 chatbox.innerHTML += `<p>You: ${message}</p>`;
-                data.forEach(msg => chatbox.innerHTML += `<p>Bot: ${msg.text}</p>`);
+                if (data.error) {
+                    chatbox.innerHTML += `<p>Error: ${data.error}</p>`;
+                } else {
+                    data.forEach(msg => chatbox.innerHTML += `<p>Bot: ${msg.text}</p>`);
+                }
+            })
+            .catch(err => {
+                const chatbox = document.getElementById("messages");
+                chatbox.innerHTML += `<p>Error connecting to server: ${err.message}</p>`;
             });
         }
     </script>
