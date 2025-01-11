@@ -17,10 +17,15 @@ RUN pip install -r requirements.txt
 # Copy Rasa project files
 COPY . .
 
-# Train the Rasa model during the image build
-RUN rasa train
+# Remove any existing models to ensure a fresh training
+RUN rm -rf models/*
 
-COPY . .
+# Train the Rasa model during the image build
+# You can control the training size by providing specific training data
+RUN rasa train --nlu --core --config config.yml --stories data/stories.yml --domain domain.yml
+
+# Optionally, compress the trained model to reduce its size (gzip example)
+RUN tar -czf models/$(ls models | head -n 1) models/$(ls models | head -n 1)
 
 # Copy Supervisor configuration
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
