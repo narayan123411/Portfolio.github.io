@@ -21,8 +21,7 @@ COPY . .
 RUN rm -rf models/*
 
 # Train the Rasa model during the image build
-# You can control the training size by providing specific training data
-RUN rasa train --nlu --core --config config.yml --stories data/stories.yml --domain domain.yml
+RUN rasa train
 
 # Optionally, compress the trained model to reduce its size (gzip example)
 RUN tar -czf models/$(ls models | head -n 1) models/$(ls models | head -n 1)
