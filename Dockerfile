@@ -23,6 +23,16 @@ RUN rm -rf models/*
 # Train the Rasa model during the image build
 RUN rasa train
 
+# Copy the generated model folder to the Docker image
+# This copies the entire 'models' folder to the Docker image
+COPY models /app/models
+
+# After training, compress the model if it exists
+RUN if [ "$(ls -A models)" ]; then \
+    tar -czf models/$(ls models | head -n 1).tar.gz -C models $(ls models | head -n 1); \
+    else echo "No models to compress"; \
+    fi
+
 # Optionally, compress the trained model to reduce its size (gzip example)
 RUN tar -czf models/$(ls models | head -n 1) models/$(ls models | head -n 1)
 
