@@ -17,6 +17,9 @@ RUN pip install -r requirements.txt
 # Copy Rasa project files
 COPY . .
 
+# Copy Supervisor configuration
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 # Expose Flask and Rasa ports
 EXPOSE 8080 5005
 
