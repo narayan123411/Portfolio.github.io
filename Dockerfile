@@ -17,6 +17,9 @@ RUN pip install -r requirements.txt
 # Copy Rasa project files
 COPY . .
 
+# Train the Rasa model during the image build
+RUN rasa train
+
 # Copy Supervisor configuration
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
