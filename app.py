@@ -42,6 +42,6 @@ def send_message():
 
 if __name__ == "__main__":
     # Use Render's environment variable for the port or default to 8080
-    port = int(os.environ.get("PORT", 8080))
+    port = 8080
     logger.info(f"Starting Flask app on port {port}")
     app.run(host="0.0.0.0", port=port)  # Flask app will run on the specified port
