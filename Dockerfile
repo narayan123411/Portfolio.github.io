@@ -14,19 +14,11 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-# Initialize a new Rasa project (remove this if you have an existing project)
-RUN rasa init --no-prompt
-RUN rasa train
+# Copy Rasa project files
+COPY . .
 
-# Copy Flask app and templates to the container
-COPY app.py .
-COPY templates ./templates/
+# Expose Flask and Rasa ports
+EXPOSE 8080 5005
 
-# Copy Supervisor configuration
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
-# Expose the single port (Render uses this for port binding)
-EXPOSE 8080
-
-# Start Supervisor to manage Rasa and Flask processes
+# Start Supervisor to manage Rasa and Flask
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
