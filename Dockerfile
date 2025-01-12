@@ -12,15 +12,6 @@ WORKDIR /app
 
 # Copy requirements and install dependencies
 COPY requirements.txt .
-
-CMD deactivate
-
-CMD rm -rf venv
-
-CMD python3 -m venv venv
-
-CMD source venv/bin/activate
-
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy Rasa project files
@@ -57,4 +48,4 @@ EXPOSE 8080 5005
 # CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
 # Start Flask and Rasa simultaneously
-CMD python app.py & rasa run --enable-api --cors "*" --port 5005 &
+CMD python app.py & rasa run --enable-api --cors "*" --port 5005 & tail -f /dev/null
