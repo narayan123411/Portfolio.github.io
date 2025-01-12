@@ -29,12 +29,12 @@ RUN rasa train
 RUN ls -l models/
 
 # After training, compress the model if it exists
-RUN if [ "$(ls -A models)" ]; then \
-    tar -czf models/$(ls models | head -n 1).tar.gz -C models $(ls models | head -n 1) && \
-    du -sh models/$(ls models | head -n 1).tar.gz && \
-    echo "Model compressed and its size logged"; \
-    else echo "No models to compress"; \
-    fi
+# RUN if [ "$(ls -A models)" ]; then \
+#     tar -czf models/$(ls models | head -n 1).tar.gz -C models $(ls models | head -n 1) && \
+#     du -sh models/$(ls models | head -n 1).tar.gz && \
+#     echo "Model compressed and its size logged"; \
+#     else echo "No models to compress"; \
+#     fi
 
 # Copy Supervisor configuration
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
