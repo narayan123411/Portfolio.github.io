@@ -15,7 +15,7 @@
             const input = document.getElementById("input");
             const message = input.value;
             input.value = "";
-            fetch("/send", {
+            fetch("/webhook", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message }),

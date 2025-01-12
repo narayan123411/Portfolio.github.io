@@ -13,7 +13,7 @@ app = Flask(__name__)
 def home():
     return render_template("index.html")
 
-@app.route("/send", methods=["POST"])
+@app.route("/webhook", methods=["POST"])
 def send_message():
     user_message = request.json.get("message")
     
