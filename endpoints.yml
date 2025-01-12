@@ -1,0 +1,6 @@
+action_endpoint:
+  url: "http://localhost:5055/webhook"  # Modify this URL if your action server is hosted elsewhere
+
+# Webhook for communication with external services like a frontend or chat interface
+webhook:
+  url: "http://localhost:5005/webhooks/rest/webhook"
