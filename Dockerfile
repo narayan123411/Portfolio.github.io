@@ -28,6 +28,8 @@ RUN rasa train
 
 RUN ls -l models/
 
+RUN du -sh models/*
+
 # After training, compress the model if it exists
 # RUN if [ "$(ls -A models)" ]; then \
 #     tar -czf models/$(ls models | head -n 1).tar.gz -C models $(ls models | head -n 1) && \
