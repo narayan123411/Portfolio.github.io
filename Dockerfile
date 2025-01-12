@@ -44,5 +44,8 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # Expose Flask and Rasa ports
 EXPOSE 8080 5005
 
-# Start Supervisor to manage Rasa and Flask
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+# # Start Supervisor to manage Rasa and Flask
+# CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
+# Start Flask and Rasa simultaneously
+CMD python app.py & rasa run --enable-api --cors "*" --port 5005 & tail -f /dev/null
