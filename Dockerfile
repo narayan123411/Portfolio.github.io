@@ -48,4 +48,4 @@ EXPOSE 8080 5005
 # CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
 # Start Flask and Rasa simultaneously
-CMD python app.py & rasa run --enable-api --cors "*" --port 5005 --no-model & tail -f /dev/null
+CMD python app.py & rasa run --enable-api --cors "*" --port 5005 & tail -f /dev/null
